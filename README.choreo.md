@@ -27,12 +27,6 @@
               └─ (可选) komari-agent → 你的 Komari 面板
 ```
 
-不需要：
-
-- Service 组件 / REST+WS 双 endpoint
-- Caddy 第二端口
-- Cloudflare Snippet 的 WebSocket 路径注入
-
 ---
 
 ## 仓库结构
@@ -250,7 +244,7 @@ curl -sS -o /dev/null -w "%{http_code}\n" "https://deeix.example.com/"
 | 前端静态资源 | `/app/frontend/out`（`FRONTEND_DIST_DIR`） |
 | 用户 | `10014`（Choreo 强制 10000–20000） |
 | Komari Agent | 构建时从 `komari-monitor/komari-agent` 最新 tag 编译 |
-| 可写 | `/tmp/deeix-data`、`/tmp/deeix-storage`；`/app/data`、`/app/storage` 软链到此 |
+| 可写 | 仅 `/tmp/deeix-data`、`/tmp/deeix-storage`（经 `SQLITE_PATH` / `STORAGE_ROOT_DIR` 指向；**不**在构建期改官方 `VOLUME` 挂载点） |
 
 Trivy **CRITICAL** 会导致 Choreo 构建失败：
 
