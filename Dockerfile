@@ -12,17 +12,12 @@ RUN apt-get update \
     && apt-get install -y --no-install-recommends ca-certificates tzdata \
     && rm -rf /var/lib/apt/lists/*
 
-# 官方镜像声明 VOLUME /app/data /app/storage；Choreo 容器文件系统只读，
-# 将业务可写路径统一导向 /tmp（业务状态仍应落在 Postgres + R2）
-RUN rm -rf /app/data /app/storage \
-    && ln -s /tmp/deeix-data /app/data \
-    && ln -s /tmp/deeix-storage /app/storage
-
+# 可写路径全部用环境变量指到 /tmp；业务状态落在 Postgres + R2。
 COPY --from=ghcr.io/komari-monitor/komari-agent:latest /app/komari-agent /app/komari-agent
 COPY entrypoint.sh /app/entrypoint.sh
 
 RUN chmod +x /app/entrypoint.sh /app/komari-agent \
-    && chown -R 10014:10014 /app
+    && chown 10014:10014 /app/entrypoint.sh /app/komari-agent
 
 # --- Choreo 默认运行时约定（均可被环境变量覆盖）---
 ENV TZ=Asia/Shanghai \
