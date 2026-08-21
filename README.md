@@ -2,45 +2,49 @@
 
 # Version
 
-v0.3.5
+v0.3.6
 
 # Releases
 
 ### ✨ Feature
 
-- Added model vendor management with custom stable keys, display names, and icons.
-- Added optional model display groups that organize the model picker independently from technical vendors.
-- Added bulk model-group assignment and drag-and-drop ordering for groups and models.
-- Added an OAuth authorization bridge with PKCE for web, desktop, and other public clients while preserving the existing 2FA and session flows.
-- Added a recommended server-side OAuth callback URL alongside the legacy web callback.
-- Added native xAI image and video generation with duration and resolution controls.
-- Added per-second pricing for video models, with duration billing applied only after successful generation.
-- Added MCP image attachment processors that convert uploaded images into text context before invoking the main model.
-- Added configurable MCP image and prompt argument mappings with Data URL and raw Base64 transfer modes.
-- Added project and conversation presets for MCP image processors, limited to one active processor per request.
-- Added configurable SSRF hostname and CIDR allowlists for trusted private integrations.
+- Added personal and built-in knowledge bases with managed files and RAG retrieval.
+- Added knowledge-base selection in chat, project-level defaults, retrieval status, and source citations in responses.
+- Added message forking to create a new conversation from any completed user or assistant message while preserving its preceding context and attachments.
+- Added synchronized Markdown response outlines for quickly navigating long answers.
+- Added Mermaid diagram downloads in SVG, PNG, and editable MMD formats.
+- Added secure SVG artifact preview and download support.
+- Added Mistral OCR with configurable endpoint, API key, model, and timeout.
+- Added native tool and thinking-summary support for Gemini Interactions.
+- Added managed custom model icons with PNG, JPEG, and WebP uploads, deduplication, reusable icon libraries, and safe cleanup.
+- Added safe deletion of unused custom model vendors.
+- Added a global switch for automatic model circuit breaking while retaining per-model and per-upstream policies.
 
 ### ⚡ Optimization
 
-- Added support for trusted private identity-provider and model-upstream endpoints without disabling global SSRF protection.
-- Revalidated every outbound redirect to prevent trusted endpoints from redirecting requests to unsafe metadata or link-local destinations.
-- Secured generated-media retrieval with controlled redirects, response validation, download limits, and safer artifact persistence.
-- Added persistent OpenRouter pricing caching with a 24-hour refresh window and stale-cache fallback when the upstream catalog is unavailable.
-- Improved model picker organization with custom groups while keeping unassigned models grouped by their technical vendor.
-- Added schema-aware MCP processor validation that detects missing image fields and unmapped required arguments.
-- Improved model call logs with separate input, output, reasoning, cache, image-count, and video-duration usage details.
-- Improved video-generation configuration by exposing only duration options supported by the active model.
-- Updated Next.js and related frontend dependencies to address known security advisories.
-- Improved redemption-code validation responses with clearer field and reason information.
+- Expanded embedding support to dimensions up to 4096 across PostgreSQL and SQLite vector storage.
+- Improved model protocol and upstream-binding management so route configurations remain isolated and intact during synchronization or editing.
+- Improved Gemini Interactions compatibility with the official request, streaming, native-tool, reasoning, and event schemas.
+- Preserved partial assistant output when reconnecting to an in-progress generation.
+- Synchronized user-setting cache invalidation across multiple backend instances so changes take effect immediately.
+- Improved knowledge-base file health, indexing status, availability diagnostics, and retrieval-source visibility.
+- Improved content moderation configuration validation, event filtering, interrupted-generation recovery, and shared-conversation displays.
+- Improved model icon validation and lifecycle management, including reference checks and delayed cleanup of unused uploads.
+- Improved administration dialog consistency and permission-group table presentation.
 
 ### 🐛 Fixed
 
-- Fixed image attachments bypassing their configured MCP processors.
-- Fixed MCP image processors receiving incorrectly encoded images or incomplete prompt arguments.
-- Fixed historical RAG evidence being recalled from unrelated conversation branches.
-- Fixed retried messages inheriting token usage from their original attempts.
-- Fixed Android browser speech recognition repeatedly restarting, becoming stuck, or failing without a useful error.
-- Added clearer voice-input errors for microphone permissions, unavailable devices, unsupported languages, network failures, and missing speech.
-- Fixed xAI video polling instability and invalid duration submissions.
-- Fixed integer overflow when allocating large video debug payloads.
-- Fixed generated video usage and pricing information being displayed inconsistently in model-call logs.
+- Fixed message forks carrying invalid state, incomplete history, or inconsistent parent relationships.
+- Fixed forked conversations appearing incorrectly in the sidebar or being available before message generation completed.
+- Fixed upstream model binding edits losing protocol or route configuration.
+- Fixed Gemini Interactions native tools, thinking summaries, streamed events, and large step indexes being parsed incorrectly.
+- Fixed Mistral OCR losing Markdown structure or incorrectly buffering streamed request bodies.
+- Fixed possible allocation overflow when processing large Mistral OCR requests.
+- Fixed stale user preferences remaining active after settings were changed.
+- Fixed EPay checkout URL construction, gateway validation, signing, error reporting, and redirect diagnostics.
+- Fixed unexpected chat scrolling when interacting with or streaming around code blocks.
+- Fixed interrupted chat generations failing to resume correctly after reconnecting.
+- Fixed content-moderation recovery states and numeric configuration validation.
+
+### ⚠️ Note
+>  This update includes a migration to fix the vector store. Please back up your database and schedule a maintenance window before upgrading. For PostgreSQL, ensure `pgvector` is version 0.8.0 or higher. After the upgrade, please check the admin dashboard and rebuild any invalid vectors.
