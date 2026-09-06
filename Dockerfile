@@ -2,7 +2,7 @@
 # DEEIX-Chat 运行镜像 (Choreo Web Application)
 # 基于官方镜像，强制非 root + /tmp 可写路径
 # ==========================================
-FROM ghcr.io/deeix-ai/deeix-chat:v0.4.0
+FROM ghcr.io/deeix-ai/deeix-chat:v0.4.1
 
 USER root
 
