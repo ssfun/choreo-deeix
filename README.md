@@ -2,45 +2,41 @@
 
 # Version
 
-v0.4.1
+v0.4.2
 
 # Releases
 
-### ✨ Features
+### ✨ Feature
 
-- Introduced a tabbed command palette for chat `@` and `/` actions.
-- Added on-demand expansion for complete tool call results.
-- Added usage balance, lifetime spending, and yearly activity insights to subscription settings.
-- Added per-user yearly activity heatmaps.
-- Added project default models and inherited MCP tool settings.
-- Added manual file vectorization.
-- Added an admin switch to disable knowledge base capabilities.
-- Added safer upstream model catalog synchronization.
-- Improved temporary conversation support for tools, files, and retrieval features.
+- **Message deletion:** Delete individual user or assistant messages while preserving subsequent messages and reconnecting the conversation; the first message and messages being generated are protected.
+- **OpenRouter image support:** Added text-to-image generation and reference-image editing, with image model discovery and streaming responses where supported.
+- **Tiered pricing import:** Import OpenRouter pricing tiers, including input, output, cache-read, and cache-write rates.
+- **Signed MCP user context:** MCP calls can optionally carry signed user, conversation, and request information, enabling services to verify caller context.
+- **MCP header presets:** Added quick-fill request headers, JSON validation, and protection against overwriting conflicting values.
+- **Embedding compatibility:** Added an option to omit the `dimensions` parameter for embedding providers that do not accept it.
 
-### ⚡ Improvements
+### ⚡ Optimization
 
-- Improved chat composer focus behavior and keyboard navigation.
-- Preserved saved drafts when creating a new conversation.
-- Clearly separated attachment upload and file-processing states.
-- Improved file preview, file list, and knowledge base detail pages.
-- Unified preview layouts for sidebar search and starred conversations.
-- Refined MCP and knowledge base popovers and dialogs.
-- Improved empty states across announcements, files, models, logs, and settings.
-- Improved code block and HTML block rendering across streamed content.
-- Improved table scrolling, column sizing, and Firefox compatibility.
-- Added better scroll-fade fallbacks for browsers without scroll-driven animation support.
+- **Dark theme:** Adjusted background, border, and foreground contrast for clearer visual hierarchy.
+- **Per-device appearance:** Light, dark, and system modes are now saved independently on each device instead of being overwritten by account synchronization.
+- **Chat navigation:** Improved message-position and response-outline navigation, including heading alignment, active-section tracking, and hover targets.
+- **Markdown tables:** Refined column widths, long-text wrapping, line spacing, and explicit line-break spacing.
+- **Admin scrolling:** Pages can now scroll when the pointer is over the sidebar or page margins.
+- **Pricing configuration:** Added clearer price units, tier ranges, and import warnings; tier limits now use full token counts instead of thousands.
+- **Upstream model status:** Clearly marks models that have disappeared from upstream catalogs and explains route availability and automatic recovery.
+- **File indexing:** Added a distinct “No text” state and count, plus an option to include these files when manually rebuilding indexes.
 
-### 🐛 Fixes
+### 🐛 Fixed
 
-- Fixed cached prompt billing to use observed usage.
-- Fixed stale conversation run indicators after generation.
-- Fixed blank scrolling before model output.
-- Fixed excess blank space after generation.
-- Fixed long reasoning content being lost during stream recovery.
-- Fixed reasoning snapshot API inconsistencies.
-- Fixed multiline web text pasting into the composer.
-- Fixed untagged code fences being parsed as Markdown.
-- Fixed active session location handling.
-- Fixed admin redemption filters and model selector styling.
-- Improved SMTP delivery, authentication, and generation lifecycle stability.
+- Fixed tool-call steps disappearing during long reasoning streams and improved preservation of reasoning content across rounds.
+- Fixed rendering problems caused by nested code fences.
+- Fixed excessive escaping when pasting rich content as Markdown.
+- Fixed model submenus shifting unexpectedly on hover or close.
+- Fixed table content bleeding above sticky headers.
+- Fixed light-theme flashes when loading a page with dark mode selected.
+- Fixed locked accounts being reported as invalid credentials; login errors now show the remaining lock duration.
+- Fixed compatibility with upstreams that only accept a single leading system message, while preserving explicit prompt-cache behavior.
+- Fixed repeated extraction and reindexing of files with no readable text.
+- Fixed imported cache-write pricing calculations and aligned displayed prices with billing.
+- Fixed raw JSON error output during upstream model synchronization.
+- Improved error handling when deleting messages or replying to a message that has already been deleted.
