@@ -2,41 +2,40 @@
 
 # Version
 
-v0.4.2
+v0.4.3
 
 # Releases
 
-### ✨ Feature
+### ✨ Features
 
-- **Message deletion:** Delete individual user or assistant messages while preserving subsequent messages and reconnecting the conversation; the first message and messages being generated are protected.
-- **OpenRouter image support:** Added text-to-image generation and reference-image editing, with image model discovery and streaming responses where supported.
-- **Tiered pricing import:** Import OpenRouter pricing tiers, including input, output, cache-read, and cache-write rates.
-- **Signed MCP user context:** MCP calls can optionally carry signed user, conversation, and request information, enabling services to verify caller context.
-- **MCP header presets:** Added quick-fill request headers, JSON validation, and protection against overwriting conflicting values.
-- **Embedding compatibility:** Added an option to omit the `dimensions` parameter for embedding providers that do not accept it.
+- Added interactive UI components for assistant replies, including charts, card grids, data tables, function plots, KPI cards, Gantt charts, calculators, decision trees, text diffs, and quizzes.
+- Added a personal UI component library where users can create, edit, preview, enable, disable, and delete custom components.
+- Added sandboxed component rendering with optional JSON Schema validation for component inputs.
+- Added time-of-day pricing multipliers for model billing. Administrators can configure different rates by weekday and time period, including overnight periods.
+- Added current pricing-period details to model pricing, usage logs, and conversation billing displays.
+- Added a setting to choose where toast notifications appear.
+- Added artifact previews to public conversation share pages.
+- Added signed MCP user-context tokens with audience binding and unique request identifiers for safer tool integrations.
 
-### ⚡ Optimization
+### ⚡ Improvements
 
-- **Dark theme:** Adjusted background, border, and foreground contrast for clearer visual hierarchy.
-- **Per-device appearance:** Light, dark, and system modes are now saved independently on each device instead of being overwritten by account synchronization.
-- **Chat navigation:** Improved message-position and response-outline navigation, including heading alignment, active-section tracking, and hover targets.
-- **Markdown tables:** Refined column widths, long-text wrapping, line spacing, and explicit line-break spacing.
-- **Admin scrolling:** Pages can now scroll when the pointer is over the sidebar or page margins.
-- **Pricing configuration:** Added clearer price units, tier ranges, and import warnings; tier limits now use full token counts instead of thousands.
-- **Upstream model status:** Clearly marks models that have disappeared from upstream catalogs and explains route availability and automatic recovery.
-- **File indexing:** Added a distinct “No text” state and count, plus an option to include these files when manually rebuilding indexes.
+- Added an output settings panel in chat for selecting interactive components and visual response preferences.
+- Improved streaming layout stability by pinning the message viewport before rendering updates.
+- Improved user-message expansion animations and tightened message bubble typography.
+- Refined interactive component transitions, sizing, previews, and responsive layouts.
+- Redesigned the admin model pricing table with clearer pricing groups, tiers, and editing controls.
+- Improved pricing tooltips and usage displays to show the currently applied time-based multiplier.
+- Improved artifact handling and preview behavior in shared conversations.
+- Improved chat screenshot and message layout calculations when messages are expanded or edited.
+- Improved admin page scrolling and table interaction consistency.
 
-### 🐛 Fixed
+### 🐛 Fixes
 
-- Fixed tool-call steps disappearing during long reasoning streams and improved preservation of reasoning content across rounds.
-- Fixed rendering problems caused by nested code fences.
-- Fixed excessive escaping when pasting rich content as Markdown.
-- Fixed model submenus shifting unexpectedly on hover or close.
-- Fixed table content bleeding above sticky headers.
-- Fixed light-theme flashes when loading a page with dark mode selected.
-- Fixed locked accounts being reported as invalid credentials; login errors now show the remaining lock duration.
-- Fixed compatibility with upstreams that only accept a single leading system message, while preserving explicit prompt-cache behavior.
-- Fixed repeated extraction and reindexing of files with no readable text.
-- Fixed imported cache-write pricing calculations and aligned displayed prices with billing.
-- Fixed raw JSON error output during upstream model synchronization.
-- Improved error handling when deleting messages or replying to a message that has already been deleted.
+- Fixed message layout observers not updating correctly while editing user messages.
+- Fixed streaming viewport jumps that could move the reader away from the latest response.
+- Fixed interactive component state and sizing issues during long or incremental responses.
+- Fixed MCP user-context tokens being reusable across unintended audiences by binding them to the target audience and a unique `jti`.
+- Fixed inconsistencies between scheduled pricing, displayed model rates, usage estimates, and billing records.
+- Fixed artifact previews not appearing correctly on public share pages.
+- Fixed layout and typography issues in expanded user messages.
+- Fixed several pricing-table alignment and control-state issues in the administration console.
