@@ -2,75 +2,36 @@
 
 # Version
 
-v0.4.4
+v0.4.5
 
 # Releases
 
 ### ✨ Feature
 
-- **Desktop app:** Added a native desktop client for macOS, Windows, and Linux, supporting both local use and connections to existing DEEIX Chat servers.
-- **Local mode:** Run the bundled server directly from the desktop app, with conversations and files stored locally using SQLite and a passwordless single-user workflow.
-- **Multi-server tabs:** Connect to multiple servers in one window, reorder tabs by dragging, and restore connected tabs after restarting.
-- **Native desktop integration:** Added system tray support, single-instance behavior, external browser links, and macOS shortcuts for closing tabs and windows.
-- **Desktop updates:** Added update checks and user-confirmed installation. Portable builds provide download notifications, while MSI builds support administrator-managed updates.
-- **Windows distribution:** Added installer, MSI, portable ZIP, and optional offline WebView2 distribution support.
-- **Enterprise policies:** Administrators can preconfigure or lock the server address and disable local mode or automatic updates.
-- **Desktop download entry:** Added configurable desktop download links and a download entry in the web interface.
-- **BYOK providers:** Users can connect model providers with their own API keys, test connections, fetch model lists, enable selected models, and replace credentials.
-- **Per-model protocols:** BYOK models can individually select OpenAI, Anthropic, Google, xAI, or OpenRouter API protocols, including supported Responses and Interactions APIs.
-- **Provider import links:** Added a confirmation-based import flow for provider configurations, suitable for integration with New API and One API sites.
-- **BYOK administration:** Added platform controls for enabling BYOK, limiting providers per user, blocking domains, and suspending or restoring user providers.
-- **Unified model catalog:** Added capability information for input/output modalities, context windows, reasoning levels, and tool support, with administrator overrides.
-- **Reasoning controls:** Users can select supported reasoning levels and regenerate replies with a different reasoning setting.
-- **Visual model parameters:** Added select, toggle, and numeric controls in the composer, alongside provider-native tool switches. Frequently used controls can be pinned.
-- **Native file input:** Supported models and protocols can receive PDF, audio, and video attachments directly, with format and size checks and text fallback for unsupported PDFs.
-- **Multimodal image embedding:** Supported embedding protocols can index image content directly, expanding image retrieval beyond OCR-derived text.
-- **Stateful interactive responses:** Added formula-driven panels, sliders, and explorable diagrams whose results update as users interact.
-- **Interactive illustrations:** Added sandboxed animations, 3D sketches, and process demonstrations, with side-panel viewing, source inspection, and follow-up question controls.
-- **Saved interaction state:** Interactive blocks and custom renderers can save their state with a conversation and pass the current state into subsequent messages.
-- **Message editing:** Added the option to save an edited user message without immediately regenerating the assistant response.
-- **Processing display:** Added a preference for hiding processing steps beneath replies.
-- **Large text attachments:** Large pasted text can automatically become a `.txt` attachment.
-- **Vector task management:** Administrators can inspect platform-wide indexing status, search files, retry individual or selected tasks, and reprocess files with missing extracted text.
-- **Error tracing:** Added persistent request error records, copyable error IDs, and matching searches across error logs, conversation events, and model-call records.
-- **Encryption key rotation:** Added support for retaining previous encryption keys while stored secrets are migrated to a new key in the background.
+- **Desktop network settings:** Choose system proxy, manual HTTP/SOCKS5 proxy, or direct connection. Manual settings support authentication and bypass rules, with passwords stored in the system keychain. Changes take effect after restarting the app.
+- **Richer Intelligent UI:** Added an image gallery with enlarged viewing, navigation, captions, and sources. Card grids can now show cover images; tables, quizzes, and statistic cards also support images.
+- **Multi-provider import:** A single link can import multiple personal providers. Review each provider’s address and masked key, select models when needed, and see individual import results or retry failures.
+- **Ultra reasoning level:** Added `ultra` where supported and clarified model capability and reasoning settings.
+- **PDF fallback:** When text extraction fails, eligible PDFs can be sent to models that support native PDF input, subject to file and page limits.
+- **Desktop notifications:** Receive a native system notification when a model reply finishes.
 
 ### ⚡ Optimization
 
-- **Model picker:** Redesigned model selection and detail views to make capabilities, context limits, pricing, and provider information easier to inspect.
-- **Composer menus:** Unified the presentation of knowledge bases, MCP tools, and interactive components, with clearer selection states.
-- **Quick selection:** Added knowledge bases to the composer’s mention menu and improved recent-item ordering and search behavior.
-- **Parameter layout:** Users can pin up to six controls; smaller screens keep fewer controls visible to preserve composer space.
-- **Media controls:** Moved image and video parameters into the composer parameter menu and improved task-specific placeholders and unavailable-state notices.
-- **JSON editing:** Replaced the Monaco JSON editor with a lighter CodeMirror editor and refined parameter-editing interactions.
-- **Administrator tables:** Reworked model and upstream tables and improved capability configuration and model synchronization workflows.
-- **Catalog refresh:** Improved capability snapshot refresh and remote catalog filtering by synchronization status.
-- **Attachment context:** File content now stays attached to its own message turn, preserving a stable reusable prompt-cache prefix.
-- **Desktop resource use:** Tabs load on demand, and long-inactive tabs can release their webviews and reload when selected.
-- **Local-mode interface:** Navigation and settings now reflect available capabilities, hiding unsupported multi-user, billing, and sharing functions.
-- **Index recovery:** Added stalled-task detection, interrupted-task recovery, automatic progress refresh, and selective indexing that avoids rebuilding already-ready files.
-- **Debug inspection:** Improved upstream request and response views with formatted/raw modes and copy actions.
-- **Library navigation:** Renamed the visible Skills area to Library and aligned related navigation.
-- **Rendering:** Updated Markdown and Mermaid rendering and improved loading and fallback states for interactive content.
+- **Faster long conversations:** Open with the latest messages and load older history as you scroll. If the initial messages do not fill the screen, more load automatically.
+- **Lighter process details:** Conversation process lists initially load summaries; full details load when expanded and can be retried if loading fails. HTTP response compression further reduces transfer size on slower connections.
+- **Smoother editing and retrying:** Message edits follow your configured send shortcut without interfering with input-method selection. Retrying a reply now takes one click.
+- **Clearer upload feedback:** Processing failures show their cause in chat. Partial uploads report success and failure counts, along with the first error, across chat, Files, and Knowledge Base.
+- **Desktop download handling:** Downloaded images and exported files now go to the system Downloads folder, with success or failure feedback.
 
 ### 🐛 Fixed
 
-- Preserved conversation context across cancelled generations.
-- Preserved attachment awareness when extracted content is unavailable.
-- Kept original pasted text when automatic `.txt` conversion fails.
-- Fixed provider sign-in callbacks across web and desktop, including native loopback completion.
-- Fixed desktop webview cross-origin API access.
-- Fixed premature branding requests before a desktop tab is bound to its server.
-- Fixed Windows window controls, installation, build, and release packaging issues.
-- Stabilized the desktop tab-strip height on Linux.
-- Fixed composer menus and model detail panels extending outside the viewport.
-- Allowed upstream model synchronization to tolerate unresolved protocols.
-- Fixed unexpected caching of exported server-component responses.
-- Corrected administrator log refresh and cleanup behavior.
-- Restored `HTTP_PROXY` / `HTTPS_PROXY` support when SSRF protection is enabled.
-- Removed API key hints from audit records and hardened provider import-link parsing.
-- Improved interactive illustration title extraction and HTML entity handling.
-- Addressed security advisories affecting image processing and other dependencies.
+- Fixed prices being mistaken for math and dollar signs rendering incorrectly inside formulas.
+- Fixed paired, unsupported inline HTML tags causing their enclosed text to disappear.
+- Fixed the statistic card layout and added fallbacks for images that fail to load in Intelligent UI.
+- Fixed duplicate system-setting rows overriding valid configuration.
+- Fixed profile saving on Windows Desktop by bundling the required time-zone data.
+- Fixed Linux AppImage packaging that included unnecessary Wayland libraries.
+- Improved macOS DMG signing and notarization reliability, including versioned package filenames; kept the Desktop download entry hidden in local mode and constrained the admin protocol menu to the viewport.
 
 ### ⏬ Download
 
