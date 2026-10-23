@@ -2,46 +2,44 @@
 
 # Version
 
-v0.4.5
+v0.4.6
 
 # Releases
 
 ### ✨ Feature
 
-- **Desktop network settings:** Choose system proxy, manual HTTP/SOCKS5 proxy, or direct connection. Manual settings support authentication and bypass rules, with passwords stored in the system keychain. Changes take effect after restarting the app.
-- **Richer Intelligent UI:** Added an image gallery with enlarged viewing, navigation, captions, and sources. Card grids can now show cover images; tables, quizzes, and statistic cards also support images.
-- **Multi-provider import:** A single link can import multiple personal providers. Review each provider’s address and masked key, select models when needed, and see individual import results or retry failures.
-- **Ultra reasoning level:** Added `ultra` where supported and clarified model capability and reasoning settings.
-- **PDF fallback:** When text extraction fails, eligible PDFs can be sent to models that support native PDF input, subject to file and page limits.
-- **Desktop notifications:** Receive a native system notification when a model reply finishes.
+ - None in this release; it is a reliability, presentation and security update.
 
-### ⚡ Optimization
+ ### ⚡ Optimization
 
-- **Faster long conversations:** Open with the latest messages and load older history as you scroll. If the initial messages do not fill the screen, more load automatically.
-- **Lighter process details:** Conversation process lists initially load summaries; full details load when expanded and can be retried if loading fails. HTTP response compression further reduces transfer size on slower connections.
-- **Smoother editing and retrying:** Message edits follow your configured send shortcut without interfering with input-method selection. Retrying a reply now takes one click.
-- **Clearer upload feedback:** Processing failures show their cause in chat. Partial uploads report success and failure counts, along with the first error, across chat, Files, and Knowledge Base.
-- **Desktop download handling:** Downloaded images and exported files now go to the system Downloads folder, with success or failure feedback.
+ - Long traces open and close smoothly: Reasoning and tool chains keep their expanded content instead of rebuilding it on every toggle, so long runs no longer freeze the conversation while expanding or collapsing.
+ - Inline illustrations follow the app: Intelligent UI diagrams now use the app's cards, tables and good/bad tone colours, size themselves to their content instead of scrolling inside their own box, and no longer clip the selection ring at their edges.
+ - Verifiable downloads: Every desktop asset now ships alongside SHA256SUMS in GNU coreutils format and a provenance record naming the source commit and tag it was built from.
+ - Faster desktop releases: macOS builds are produced on native runners per architecture in separate platform jobs instead of one long serial job, so a release finishes with far less waiting.
+ - Smaller desktop app: Unused dependencies were removed from the desktop shell.
 
-### 🐛 Fixed
+ ### 🐛 Fixed
 
-- Fixed prices being mistaken for math and dollar signs rendering incorrectly inside formulas.
-- Fixed paired, unsupported inline HTML tags causing their enclosed text to disappear.
-- Fixed the statistic card layout and added fallbacks for images that fail to load in Intelligent UI.
-- Fixed duplicate system-setting rows overriding valid configuration.
-- Fixed profile saving on Windows Desktop by bundling the required time-zone data.
-- Fixed Linux AppImage packaging that included unnecessary Wayland libraries.
-- Improved macOS DMG signing and notarization reliability, including versioned package filenames; kept the Desktop download entry hidden in local mode and constrained the admin protocol menu to the viewport.
+ - Fixed reasoning and tool steps staying on "Calling" with a timer that kept counting after the reply had finished, which happened when a tool returned binary content and its trace write failed.
+ - Fixed image generation failing when a provider returned both a URL and inline bytes for the same image; the inline bytes are used and the redundant download is skipped.
+ - Fixed admin pickers with long option lists trapping the mouse wheel, for both the permission-group selector and the upstream protocol menu.
+ - Fixed admin log tabs being clipped on phones, where the last tabs could not be reached or tapped.
+ - Fixed desktop releases being published from the wrong ref; publication now runs in the source tag context and verifies the tag before uploading.
+ - Fixed macOS packaging signing checks by verifying the DMG signer's team ID, so a build signed by the wrong identity fails instead of shipping.
+ - Fixed desktop builds failing with --locked when the root package version in Cargo.lock drifted from the project version.
+ - Security: Certificate verification on the server and in the desktop app now rejects chains built from revoked or distrusted intermediate certificates (Go 1.26.10 with x/net 0.60.0, rustls-webpki 0.103.16, webpki-root-certs 1.0.10).
+ - Security: The desktop updater no longer includes ZIP extraction support, removing a library with unpatched archive advisories.
+ - Security: The JavaScript toolchain moved to Node.js 26.12.1, with supported lines documented as 22.23.4 / 24.22.1 / 26.12.1, closing eight Node.js advisories.
 
 ### ⏬ Download
 
-| Platform | Download | Verified | Available |
-| --- | --- | --- | --- |
-| macOS · Apple silicon | `macos-arm64.dmg` | ✅ Verified | ✅ Available |
-| macOS · Intel | `macos-x64.dmg` | ✅ Verified | ✅ Available |
-| Linux · x86_64 | `linux-x64.AppImage` or `.deb` | ✅ Verified | ✅ Available |
-| Windows · x86_64 | `windows-x64-setup.exe` | ✅ Verified | ✅ Available |
-| Windows · x86_64 · MSI | `windows-x64.msi` | ✅ Verified | ✅ Available |
-| Windows · x86_64 · Portable | `windows-x64-portable.zip` | ✅ Verified | ✅ Available |
+| Platform | Download |
+| --- | --- |
+| macOS · Apple silicon | `DEEIX-Chat-0.4.6-macos-arm64.dmg` |
+| macOS · Intel | `DEEIX-Chat-0.4.6-macos-x64.dmg` |
+| Linux · x86_64 | `DEEIX-Chat-0.4.6-linux-x64.AppImage` or `.deb` |
+| Windows · x86_64 | `DEEIX-Chat-0.4.6-windows-x64-setup.exe` |
+| Windows · x86_64 · MSI | `DEEIX-Chat-0.4.6-windows-x64.msi` |
+| Windows · x86_64 · Portable | `DEEIX-Chat-0.4.6-windows-x64-portable.zip` |
 
 Checksums are in `SHA256SUMS`. `-updater.tar.gz`, `.sig` and `latest.json` belong to the built-in updater.
